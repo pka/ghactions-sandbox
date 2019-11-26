@@ -14,7 +14,7 @@ jobs:
       - name: version number
         id: version_number
         run: |
-          if [ -z "${{ github.ref }}" ]; then VERSION=$(date +%Y%m%d%S); else VERSION=$(basename ${{ github.ref }}); fi
+          if [ ${{ startsWith(github.ref, 'refs/tags/') }} = true ]; then VERSION=$(basename ${{ github.ref }}); else VERSION=$(date +%Y%m%d%S); fi
           echo "##[set-output name=version;]$VERSION"
       - name: Build project
         run: |
@@ -28,7 +28,7 @@ jobs:
           tag_name: ${{ steps.version_number.outputs.version }}
           release_name: Release ${{ steps.version_number.outputs.version }}
           draft: false
-          prerelease: true
+          prerelease: ${{ !startsWith(github.ref, 'refs/tags/') }}
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1.0.1
