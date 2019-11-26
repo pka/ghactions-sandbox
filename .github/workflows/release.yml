@@ -46,7 +46,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ join(steps.create_release.outputs.upload_url, env.upload_url_latest) }}
+          upload_url: ${{ env.upload_url_latest }}
           asset_path: ./my-artifact.zip
           asset_name: my-artifact.zip
           asset_content_type: application/zip
