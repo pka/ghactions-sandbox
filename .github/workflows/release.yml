@@ -13,7 +13,9 @@ jobs:
       # found in https://github.com/rusnasonov/vscode-hugo/blob/master/.github/workflows/build.yml
       - name: version number
         id: version_number
-        run: echo "##[set-output name=version;]$(date +%Y%m%d%S)"
+        run: |
+          if [ -z $(git tag -l --points-at HEAD) ]; then VERSION=$(date +%Y%m%d%S); else VERSION=$(git tag -l --points-at HEAD); fi
+          echo "##[set-output name=version;]$VERSION"
 
       - name: Build project
         run: |
