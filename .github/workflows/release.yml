@@ -12,6 +12,9 @@ jobs:
       - name: version number
         id: version_number
         run: date +%Y%m%d%S
+        outputs:
+          version_number:
+            description: 'Version number'
       - name: Dump steps context
         env:
           STEPS_CONTEXT: ${{ toJson(steps.version_number.outputs) }}
