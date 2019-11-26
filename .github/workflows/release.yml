@@ -11,14 +11,13 @@ jobs:
         uses: actions/checkout@master
       - name: version number
         id: version_number
-        run: date +%Y%m%d%S
-        outputs:
-          version_number:
-            description: 'Version number'
+        run: export VERSION=$(date +%Y%m%d%S)
+      - name: Dump steps context
+        run: echo "$VERSION"
       - name: Dump steps context
         env:
-          STEPS_CONTEXT: ${{ toJson(steps.version_number.outputs) }}
-        run: echo "$STEPS_CONTEXT"
+          ENV_VERSION: ${{ env.VERSION }}
+        run: echo "$ENV_VERSION"
       # - name: Build project
       #   run: |
       #     zip --junk-paths my-artifact README.md
