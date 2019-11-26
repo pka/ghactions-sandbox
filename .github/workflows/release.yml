@@ -48,5 +48,5 @@ jobs:
         with:
           upload_url: ${{ env.upload_url_latest }}
           asset_path: ./my-artifact.zip
-          asset_name: my-artifact.zip
+          asset_name: my-artifact2.zip
           asset_content_type: application/zip
