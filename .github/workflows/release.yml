@@ -10,10 +10,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@master
       - name: version number
+        id: version_number
         run: date +%Y%m%d%S
       - name: Dump steps context
         env:
-          STEPS_CONTEXT: ${{ toJson(steps) }}
+          STEPS_CONTEXT: ${{ toJson(steps.version_number.outputs) }}
         run: echo "$STEPS_CONTEXT"
       # - name: Build project
       #   run: |
