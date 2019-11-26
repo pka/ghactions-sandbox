@@ -14,7 +14,7 @@ jobs:
       - name: version number
         id: version_number
         run: |
-          if [ -z $(git tag -l --points-at HEAD) ]; then VERSION=$(date +%Y%m%d%S); else VERSION=$(git tag -l --points-at HEAD); fi
+          if [ -z "${{ github.ref }}" ]; then VERSION=$(date +%Y%m%d%S); else VERSION=$(basename ${{ github.ref }}); fi
           echo "##[set-output name=version;]$VERSION"
       - name: Build project
         run: |
