@@ -9,15 +9,40 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@master
+
       - name: version number
         id: version_number
-        run: export VERSION=$(date +%Y%m%d%S)
-      - name: Dump steps context
-        run: echo "$VERSION"
+        run: echo "##[set-output name=version;]$(date +%Y%m%d%S)"
+
+      - name: Dump outputs
+        env:
+          STEPS_CONTEXT: ${{ toJson(steps.version_number.outputs) }}
+        run: echo "$STEPS_CONTEXT"
+
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Dump job context
+        env:
+          JOB_CONTEXT: ${{ toJson(job) }}
+        run: echo "$JOB_CONTEXT"
       - name: Dump steps context
         env:
-          ENV_VERSION: ${{ env.VERSION }}
-        run: echo "$ENV_VERSION"
+          STEPS_CONTEXT: ${{ toJson(steps) }}
+        run: echo "$STEPS_CONTEXT"
+      - name: Dump runner context
+        env:
+          RUNNER_CONTEXT: ${{ toJson(runner) }}
+        run: echo "$RUNNER_CONTEXT"
+      - name: Dump strategy context
+        env:
+          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
+        run: echo "$STRATEGY_CONTEXT"
+      - name: Dump matrix context
+        env:
+          MATRIX_CONTEXT: ${{ toJson(matrix) }}
+        run: echo "$MATRIX_CONTEXT"
       # - name: Build project
       #   run: |
       #     zip --junk-paths my-artifact README.md
