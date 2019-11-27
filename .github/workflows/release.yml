@@ -25,8 +25,8 @@ jobs:
       - uses: actions/download-artifact@v1
         with:
           name: my-artifact
-      - run: ls -lrt my-artifact*
-      - run: cd my-artifact && zip -r ../my-artifact.zip *
+      - run: ls -lrt
+      # - run: cd my-artifact && zip -r ../my-artifact.zip *
       # found in https://github.com/rusnasonov/vscode-hugo/blob/master/.github/workflows/build.yml
       - name: version number
         id: version_number
