@@ -14,7 +14,15 @@ jobs:
         id: version_number
         # found in https://github.com/rusnasonov/vscode-hugo/blob/master/.github/workflows/build.yml
         run: |
-          if [ ${{ startsWith(github.ref, 'refs/tags/') }} = true ]; then VERSION=$(basename ${{ github.ref }}); else VERSION=$(date +%Y%m%d%S); fi
+          if [ ${{ startsWith(github.ref, 'refs/tags/') }} = true ]; then
+            VERSION=$(basename ${{ github.ref }})
+          else
+            VERSION=ci-latest
+            git tag -d ci-latest || true
+            git push origin :ci-latest || true
+            git tag -m ci-latest ci-latest
+            git push --tags
+          fi
           echo "##[set-output name=version;]$VERSION"
       - name: Build project
         run: |
