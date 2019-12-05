@@ -55,4 +55,4 @@ jobs:
           asset_content_type: application/zip
       - name: Delete previous release
         run: |
-          curl -X DELETE ${{ steps.version_number.outputs.prev_release }}
+          curl -H "PRIVATE-TOKEN: ${{ secrets.GITHUB_CI_TOKEN }}" -X DELETE ${{ steps.version_number.outputs.prev_release }}
