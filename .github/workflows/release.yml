@@ -57,3 +57,4 @@ jobs:
         run: |
           curl -s -H "authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
                -X DELETE ${{ steps.version_number.outputs.prev_release }}
+        if: steps.version_number.outputs.prev_release != ''
