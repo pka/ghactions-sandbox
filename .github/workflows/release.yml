@@ -53,11 +53,11 @@ jobs:
           asset_path: ./my-artifact.zip
           asset_name: my-artifact.zip
           asset_content_type: application/zip
-      - name: Trigger Gitlab build
-        run: |
-          curl -s -X POST -F token={{ secrets.GITLAB_TOKEN }} -F ref=master https://git.sourcepole.ch/api/v4/projects/234/trigger/pipeline
       - name: Delete previous release
         run: |
           curl -s -H "authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
                -X DELETE ${{ steps.version_number.outputs.prev_release }}
         if: steps.version_number.outputs.prev_release != ''
+      - name: Trigger Gitlab build
+        run: |
+          curl -s -X POST -F token=${{ secrets.GITLAB_TOKEN }} -F ref=master https://git.sourcepole.ch/api/v4/projects/234/trigger/pipeline
